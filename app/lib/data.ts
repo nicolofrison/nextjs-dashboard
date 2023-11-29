@@ -37,6 +37,9 @@ export async function fetchRevenue() {
 export async function fetchLatestInvoices() {
   noStore();
 
+  console.log('Fetching latest invoices data...');
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   try {
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
@@ -44,6 +47,8 @@ export async function fetchLatestInvoices() {
       JOIN customers ON invoices.customer_id = customers.id
       ORDER BY invoices.date DESC
       LIMIT 5`;
+
+    console.log('Data fetch completed after 3 seconds.');
 
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
@@ -58,6 +63,9 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   noStore();
+
+  console.log('Fetching latest invoices data...');
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   try {
     // You can probably combine these into a single SQL query
